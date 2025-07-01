@@ -1,14 +1,30 @@
-# MatConvNet: CNNs for MATLAB
+# Fast-RCNN demo
 
-**MatConvNet** is a MATLAB toolbox implementing *Convolutional Neural
-Networks* (CNNs) for computer vision applications. It is simple,
-efficient, and can run and learn state-of-the-art CNNs. Several
-example CNNs are included to classify and encode images. Please visit
-the [homepage](http://www.vlfeat.org/matconvnet) to know more.
+This folder contains an example implementation of Fast-RCNN [1] in
+MatConvNet. The example trains and test on the PASCAL VOC 2007 data.
 
-In case of compilation issues, please read first the
-[Installation](http://www.vlfeat.org/matconvnet/install/) and
-[FAQ](http://www.vlfeat.org/matconvnet/faq/) section before creating an GitHub
-issue. For general inquiries regarding network design and training
-related questions, please use the
-[Discussion forum](https://groups.google.com/d/forum/matconvnet).
+There are three entry-point scripts:
+
+* `fast_rcnn_demo.m`: runs the original Caffe model imported in MatConvNet.
+* `fast_rcnn_train.m`: trains a new model from scratch, using pre-computed proposals.
+* `fast_rcnn_evaluate.m`: evaluates the trained model.
+
+Note that the code does not ship with a proposal generation method, so
+proposals must be precomputed (using e.g. edge boxes or selective
+search windows).
+
+The `fast_rcnn_demo.m` code should run out of the box, downloading the
+model as needed.
+
+To test the training code using the first GPU on your system, use
+something like:
+
+    run matlab/vl_setupnn
+    addpath examples/fast_rcnn
+    fast_rcnn_train('train',struct('gpus',1)) ;
+    fast_rcnn_evaluate('gpu',1) ;
+
+## References
+
+1.  *Fast R-CNN*, R. Girshick, International Conference on Computer
+    Vision (ICCV), 2015.
